@@ -2,14 +2,21 @@ package com.suprab.modules.membro.service;
 
 
 import com.suprab.exception.ObjectNotFoundException;
+import com.suprab.modules.corpoFilosofico.entity.CorpoFilosofico;
+import com.suprab.modules.corpoFilosofico.mapper.CorpoFilosoficoMapper;
+import com.suprab.modules.corpoFilosofico.service.CorpoFilosoficoService;
+import com.suprab.modules.endereco.service.EnderecoService;
+import com.suprab.modules.membro.dto.MembroCadastroDTO;
 import com.suprab.modules.membro.dto.MembroDTO;
 import com.suprab.modules.membro.entity.Membro;
+import com.suprab.modules.membro.mapper.MembroCadastroMapper;
 import com.suprab.modules.membro.mapper.MembroMapper;
 import com.suprab.modules.membro.repository.MembroRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.suprab.modules.utils.StringValidator.isEmptyOrNull;
@@ -20,6 +27,10 @@ public class MembroService {
 
     private final MembroRepository repository;
     private final MembroMapper mapper;
+    private final CorpoFilosoficoService corpoService;
+    private final MembroCadastroMapper cadastroMapper;
+    private final EnderecoService enderecoService;
+    private final CorpoFilosoficoMapper corpoMapper;
 
 
     @Transactional(readOnly = true)
@@ -29,8 +40,17 @@ public class MembroService {
 
 
     @Transactional
-    public Membro salvar(final MembroDTO dto) {
-        return repository.save(mapper.toEntity(dto));
+    public Membro salvar(final MembroCadastroDTO dto) {
+        Membro membro = cadastroMapper.toEntity(dto);
+        if (dto.getIdEndereco() != null && dto.getIdEndereco() != 0) {
+            membro.setEndereco(enderecoService.buscarPeloId(dto.getIdEndereco()));
+        }
+        if (!dto.getCorposFilosoficos().isEmpty()) {
+            List<CorpoFilosofico> corpos = corpoMapper.toEntity(dto.getCorposFilosoficos());
+            membro.setCorposFilosoficos(corpoService.salvarTodos(corpos));
+        }
+
+        return repository.save(membro);
     }
 
     public Membro buscarPeloId(Long id) {
@@ -58,5 +78,32 @@ public class MembroService {
     public void deletarPeloId(Long id) {
         buscarPeloId(id);
         repository.deleteById(id);
+    }
+
+    public Membro adicionarCorpoFilosofico(Long idMembro, Long idCorpo) {
+        Membro membro = buscarPeloId(idMembro);
+        if (membro.getCorposFilosoficos() == null) {
+            membro.setCorposFilosoficos(new ArrayList<>());
+        }
+
+        CorpoFilosofico corpo = corpoService.buscarPeloId(idCorpo);
+
+        if (!membro.getCorposFilosoficos().contains(corpo)) {
+            membro.getCorposFilosoficos().add(corpo);
+            return repository.save(membro);
+        }
+        return membro;
+
+    }
+
+    public Membro removerCorpoFilosofico(Long idMembro, Long idCorpo) {
+        Membro membro = buscarPeloId(idMembro);
+        if (membro.getCorposFilosoficos() == null) {
+            throw new ObjectNotFoundException("Esse membro não possui o corpo fisolófico informado");
+        }
+
+        CorpoFilosofico corpo = corpoService.buscarPeloId(idCorpo);
+        membro.getCorposFilosoficos().removeIf(c -> c.getId().equals(corpo.getId()));
+        return repository.save(membro);
     }
 }

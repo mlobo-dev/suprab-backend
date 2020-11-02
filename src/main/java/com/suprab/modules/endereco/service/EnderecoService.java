@@ -1,11 +1,11 @@
-package com.suprab.modules.Endereco.service;
+package com.suprab.modules.endereco.service;
 
 
 import com.suprab.exception.ObjectNotFoundException;
-import com.suprab.modules.Endereco.dto.EnderecoDTO;
-import com.suprab.modules.Endereco.entity.Endereco;
-import com.suprab.modules.Endereco.mapper.EnderecoMapper;
-import com.suprab.modules.Endereco.repository.EnderecoRepository;
+import com.suprab.modules.endereco.dto.EnderecoDTO;
+import com.suprab.modules.endereco.entity.Endereco;
+import com.suprab.modules.endereco.mapper.EnderecoMapper;
+import com.suprab.modules.endereco.repository.EnderecoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,7 +35,7 @@ public class EnderecoService {
 
     public Endereco buscarPeloId(Long id) {
         return repository.findById(id).orElseThrow(() -> new ObjectNotFoundException(
-                "Usuáio não econtrado pelo ID:" + id
+                "Endereco não econtrado pelo ID:" + id
         ));
     }
 

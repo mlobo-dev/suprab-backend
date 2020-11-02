@@ -1,6 +1,6 @@
-package com.suprab.modules.Endereco.repository;
+package com.suprab.modules.endereco.repository;
 
-import com.suprab.modules.Endereco.entity.Endereco;
+import com.suprab.modules.endereco.entity.Endereco;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,4 +1,4 @@
-package com.suprab.modules.Endereco.entity;
+package com.suprab.modules.endereco.entity;
 
 import lombok.Getter;
 import lombok.Setter;

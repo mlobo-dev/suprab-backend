@@ -1,9 +1,9 @@
-package com.suprab.modules.Endereco.mapper;
+package com.suprab.modules.endereco.mapper;
 
 
 import com.suprab.config.mapstruct.BaseMapper;
-import com.suprab.modules.Endereco.dto.EnderecoDTO;
-import com.suprab.modules.Endereco.entity.Endereco;
+import com.suprab.modules.endereco.dto.EnderecoDTO;
+import com.suprab.modules.endereco.entity.Endereco;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 

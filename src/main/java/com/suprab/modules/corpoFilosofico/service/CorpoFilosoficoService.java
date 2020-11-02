@@ -54,4 +54,8 @@ public class CorpoFilosoficoService {
         buscarPeloId(id);
         repository.deleteById(id);
     }
+
+    public List<CorpoFilosofico> salvarTodos(List<CorpoFilosofico> corpos) {
+        return repository.saveAll(corpos);
+    }
 }

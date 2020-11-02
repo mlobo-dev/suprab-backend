@@ -1,4 +1,4 @@
-package com.suprab.modules.Endereco.dto;
+package com.suprab.modules.endereco.dto;
 
 import lombok.Getter;
 import lombok.Setter;

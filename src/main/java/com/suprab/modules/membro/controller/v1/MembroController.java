@@ -1,6 +1,7 @@
 package com.suprab.modules.membro.controller.v1;
 
 
+import com.suprab.modules.membro.dto.MembroCadastroDTO;
 import com.suprab.modules.membro.dto.MembroDTO;
 import com.suprab.modules.membro.mapper.MembroMapper;
 import com.suprab.modules.membro.service.MembroService;
@@ -24,7 +25,7 @@ public class MembroController {
 
     @PostMapping
     @ApiOperation("Salvar um Funcionário")
-    public ResponseEntity<MembroDTO> salvar(@Validated @RequestBody MembroDTO dto) {
+    public ResponseEntity<MembroDTO> salvar(@Validated @RequestBody MembroCadastroDTO dto) {
         return ResponseEntity.ok(mapper.toDto(service.salvar(dto)));
     }
 
@@ -44,6 +45,18 @@ public class MembroController {
     @ApiOperation("Busca o Funcionário Pelo ID ")
     public ResponseEntity<MembroDTO> buscarPeloId(@PathVariable(value = "id") Long id) {
         return ResponseEntity.ok(mapper.toDto(service.buscarPeloId(id)));
+    }
+
+    @GetMapping("/{idMembro}/adicionar/{idCorpo}")
+    @ApiOperation("Adiciona o corpo filosófico ao membro")
+    public ResponseEntity<MembroDTO> adicionarCorpoFilosofico(@PathVariable(value = "idMembro") Long idMembro, @PathVariable(value = "idCorpo") Long idCorpo) {
+        return ResponseEntity.ok(mapper.toDto(service.adicionarCorpoFilosofico(idMembro, idCorpo)));
+    }
+
+    @GetMapping("/{idMembro}/remover/{idCorpo}")
+    @ApiOperation("remove o corpo filosófico ao membro")
+    public ResponseEntity<MembroDTO> removerCorpoFilosofico(@PathVariable(value = "idMembro") Long idMembro, @PathVariable(value = "idCorpo") Long idCorpo) {
+        return ResponseEntity.ok(mapper.toDto(service.adicionarCorpoFilosofico(idMembro, idCorpo)));
     }
 
 

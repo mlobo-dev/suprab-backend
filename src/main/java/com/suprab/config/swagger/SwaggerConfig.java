@@ -34,7 +34,7 @@ public class SwaggerConfig {
     public Docket criarDocket(String apiVersion) {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.sgp"))
+                .apis(RequestHandlerSelectors.basePackage("com.suprab"))
                 .paths(PathSelectors.regex("/" + apiVersion + "/.*"))
                 .build()
                 .groupName(apiVersion)

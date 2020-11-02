@@ -1,10 +1,13 @@
 package com.suprab.modules.membro.entity;
 
+import com.suprab.modules.corpoFilosofico.entity.CorpoFilosofico;
+import com.suprab.modules.endereco.entity.Endereco;
 import com.suprab.modules.membro.StatusEnum;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @Setter
@@ -41,10 +44,16 @@ public class Membro {
     @Column(name = "DT_NASCIMENTO")
     private String dataNascimento;
 
+    @OneToMany
+    @JoinTable(name = "TB_MEMBRO_CORPO_FILOSOFICO",
+            joinColumns = @JoinColumn(name = "COD_MEMBRO"),
+            inverseJoinColumns = @JoinColumn(name = "COD_CORPO_FILOSOFICO")
+    )
+    private List<CorpoFilosofico> corposFilosoficos;
 
-
-
-
+    @ManyToOne
+    @JoinColumn(name = "COD_ENDERECO")
+    private Endereco endereco;
 
 
 }
