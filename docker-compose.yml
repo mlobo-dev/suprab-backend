@@ -7,8 +7,12 @@ services:
     build: ./
     ports:
       - "8080:8080"
+    networks:
+      - backand-mysql
     depends_on:
       - dbmysql
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://dbmysql:3306/suprab?autoReconnect=true&useSSL=false
 
   dbmysql:
     image: mysql:5.7
@@ -16,6 +20,8 @@ services:
       - db_data:/var/lib/mysql
     ports:
       - "3306:3306"
+    networks:
+      - backand-mysql
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
@@ -25,3 +31,6 @@ services:
 
 volumes:
   db_data: {}
+
+networks:
+  backand-mysql:
