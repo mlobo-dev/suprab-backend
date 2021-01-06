@@ -39,8 +39,6 @@ public class UsuarioService {
         ));
     }
 
-
-
     public void deletarPeloId(Long id) {
         buscarPeloId(id);
         repository.deleteById(id);

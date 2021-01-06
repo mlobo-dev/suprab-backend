@@ -5,9 +5,10 @@ import com.suprab.exception.ObjectNotFoundException;
 import com.suprab.modules.corpoFilosofico.entity.CorpoFilosofico;
 import com.suprab.modules.corpoFilosofico.mapper.CorpoFilosoficoMapper;
 import com.suprab.modules.corpoFilosofico.service.CorpoFilosoficoService;
+import com.suprab.modules.endereco.entity.Endereco;
+import com.suprab.modules.endereco.mapper.EnderecoCadastroMapper;
 import com.suprab.modules.endereco.service.EnderecoService;
 import com.suprab.modules.membro.dto.MembroCadastroDTO;
-import com.suprab.modules.membro.dto.MembroDTO;
 import com.suprab.modules.membro.entity.Membro;
 import com.suprab.modules.membro.mapper.MembroCadastroMapper;
 import com.suprab.modules.membro.mapper.MembroMapper;
@@ -31,7 +32,7 @@ public class MembroService {
     private final MembroCadastroMapper cadastroMapper;
     private final EnderecoService enderecoService;
     private final CorpoFilosoficoMapper corpoMapper;
-
+    private final EnderecoCadastroMapper enderecoMapper;
 
     @Transactional(readOnly = true)
     public List<Membro> listarTudo() {
@@ -42,9 +43,8 @@ public class MembroService {
     @Transactional
     public Membro salvar(final MembroCadastroDTO dto) {
         Membro membro = cadastroMapper.toEntity(dto);
-        if (dto.getIdEndereco() != null && dto.getIdEndereco() != 0) {
-            membro.setEndereco(enderecoService.buscarPeloId(dto.getIdEndereco()));
-        }
+        membro.setEndereco(enderecoService.salvar(enderecoMapper.toEntity(dto)));
+
         if (!dto.getCorposFilosoficos().isEmpty()) {
             List<CorpoFilosofico> corpos = corpoMapper.toEntity(dto.getCorposFilosoficos());
             membro.setCorposFilosoficos(corpoService.salvarTodos(corpos));
@@ -59,20 +59,37 @@ public class MembroService {
         ));
     }
 
-    public Membro editar(MembroDTO dto) {
-        Membro membro = atualizarDados(buscarPeloId(dto.getId()), mapper.toEntity(dto));
+    public Membro editar(MembroCadastroDTO dto) {
+        Membro cadastroMembro = cadastroMapper.toEntity(dto);
+        cadastroMembro.setEndereco(enderecoMapper.toEntity(dto));
+
+        Membro membro = atualizarDados(
+                buscarPeloId(dto.getId()),
+                cadastroMembro
+        );
+
         return repository.save(membro);
     }
 
     private Membro atualizarDados(Membro saved, Membro dto) {
-        saved.setNome(isEmptyOrNull(dto.getNome()) ? dto.getNome() : saved.getNome());
-        saved.setCargo(isEmptyOrNull(dto.getCargo()) ? dto.getCargo() : saved.getCargo());
-        saved.setCgp(isEmptyOrNull(dto.getCgp()) ? dto.getCgp() : saved.getCgp());
-        saved.setCpf(isEmptyOrNull(dto.getCpf()) ? dto.getCpf() : saved.getCpf());
-        saved.setDataNascimento(isEmptyOrNull(dto.getDataNascimento()) ? dto.getDataNascimento() : saved.getDataNascimento());
-        saved.setStatus(dto.getStatus() != null ? dto.getStatus() : saved.getStatus());
-        saved.setTituloHonorifico(isEmptyOrNull(dto.getTituloHonorifico()) ? dto.getTituloHonorifico() : saved.getTituloHonorifico());
-        return saved;
+
+        Endereco endereco = new Endereco();
+        endereco.setId(saved.getEndereco().getId());
+        endereco.setUf(!isEmptyOrNull(dto.getEndereco().getUf()) ? dto.getEndereco().getUf() : saved.getEndereco().getUf());
+        endereco.setCidade(!isEmptyOrNull(dto.getEndereco().getCidade()) ? dto.getEndereco().getCidade() : saved.getEndereco().getCidade());
+        endereco.setCep(!isEmptyOrNull(dto.getEndereco().getCep()) ? dto.getEndereco().getCep() : saved.getEndereco().getCep());
+        endereco.setCpf(!isEmptyOrNull(dto.getEndereco().getCpf()) ? dto.getEndereco().getCpf() : saved.getEndereco().getCpf());
+
+        dto.setEndereco(enderecoService.editar(endereco));
+        dto.setNome(!isEmptyOrNull(dto.getNome()) ? dto.getNome() : saved.getNome());
+        dto.setCargo(!isEmptyOrNull(dto.getCargo()) ? dto.getCargo() : saved.getCargo());
+        dto.setCgp(!isEmptyOrNull(dto.getCgp()) ? dto.getCgp() : saved.getCgp());
+        dto.setCpf(!isEmptyOrNull(dto.getCpf()) ? dto.getCpf() : saved.getCpf());
+        dto.setDataNascimento(!isEmptyOrNull(dto.getDataNascimento()) ? dto.getDataNascimento() : saved.getDataNascimento());
+        dto.setStatus(dto.getStatus() != null ? dto.getStatus() : saved.getStatus());
+        dto.setTituloHonorifico(!isEmptyOrNull(dto.getTituloHonorifico()) ? dto.getTituloHonorifico() : saved.getTituloHonorifico());
+
+        return dto;
     }
 
     public void deletarPeloId(Long id) {
@@ -106,4 +123,6 @@ public class MembroService {
         membro.getCorposFilosoficos().removeIf(c -> c.getId().equals(corpo.getId()));
         return repository.save(membro);
     }
+
+
 }

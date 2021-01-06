@@ -3,6 +3,7 @@ package com.suprab.modules.membro.controller.v1;
 
 import com.suprab.modules.membro.dto.MembroCadastroDTO;
 import com.suprab.modules.membro.dto.MembroDTO;
+import com.suprab.modules.membro.mapper.MembroCadastroMapper;
 import com.suprab.modules.membro.mapper.MembroMapper;
 import com.suprab.modules.membro.service.MembroService;
 import io.swagger.annotations.Api;
@@ -22,6 +23,7 @@ public class MembroController {
 
     private final MembroService service;
     private final MembroMapper mapper;
+    private final MembroCadastroMapper cadastroMapper;
 
     @PostMapping
     @ApiOperation("Salvar um Funcionário")
@@ -31,7 +33,7 @@ public class MembroController {
 
     @PutMapping
     @ApiOperation("Edita um  Funcionário.")
-    public ResponseEntity<MembroDTO> editar(@Validated @RequestBody final MembroDTO dto) {
+    public ResponseEntity<MembroDTO> editar(@Validated @RequestBody final MembroCadastroDTO dto) {
         return ResponseEntity.ok(mapper.toDto(service.editar(dto)));
     }
 

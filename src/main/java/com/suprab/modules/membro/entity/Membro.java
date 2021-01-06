@@ -44,7 +44,7 @@ public class Membro {
     @Column(name = "DT_NASCIMENTO")
     private String dataNascimento;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "TB_MEMBRO_CORPO_FILOSOFICO",
             joinColumns = @JoinColumn(name = "COD_MEMBRO"),
             inverseJoinColumns = @JoinColumn(name = "COD_CORPO_FILOSOFICO")

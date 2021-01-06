@@ -33,6 +33,10 @@ public class EnderecoService {
         return repository.save(mapper.toEntity(dto));
     }
 
+    public Endereco salvar(final Endereco endereco) {
+        return repository.save(endereco);
+    }
+
     public Endereco buscarPeloId(Long id) {
         return repository.findById(id).orElseThrow(() -> new ObjectNotFoundException(
                 "Endereco não econtrado pelo ID:" + id
@@ -44,9 +48,13 @@ public class EnderecoService {
         return repository.save(Endereco);
     }
 
+    public Endereco editar(Endereco endereco) {
+        return repository.save(endereco);
+    }
+
     private Endereco atualizarDados(Endereco saved, Endereco dto) {
-        saved.setCidade(isEmptyOrNull(dto.getCidade()) ? dto.getCidade() : saved.getCidade());
-        saved.setCpf(isEmptyOrNull(dto.getCpf()) ? dto.getCpf() : saved.getCpf());
+        saved.setCidade(!isEmptyOrNull(dto.getCidade()) ? dto.getCidade() : saved.getCidade());
+        saved.setCpf(!isEmptyOrNull(dto.getCpf()) ? dto.getCpf() : saved.getCpf());
         return saved;
     }
 
