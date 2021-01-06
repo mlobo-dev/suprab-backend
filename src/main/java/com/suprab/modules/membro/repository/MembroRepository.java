@@ -9,4 +9,6 @@ import javax.transaction.Transactional;
 @Repository
 public interface MembroRepository extends JpaRepository<Membro, Long> {
 
+    @Transactional
+    Membro findByCpf(String cpf);
 }

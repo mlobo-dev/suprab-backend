@@ -1,6 +1,7 @@
 package com.suprab.modules.membro.service;
 
 
+import com.suprab.exception.ObjectAlreadyExistsException;
 import com.suprab.exception.ObjectNotFoundException;
 import com.suprab.modules.corpoFilosofico.entity.CorpoFilosofico;
 import com.suprab.modules.corpoFilosofico.mapper.CorpoFilosoficoMapper;
@@ -42,6 +43,10 @@ public class MembroService {
 
     @Transactional
     public Membro salvar(final MembroCadastroDTO dto) {
+        if(repository.findByCpf(dto.getCpf()) != null){
+            throw new ObjectAlreadyExistsException("Cpf já cadastrado. Cpf: " + dto.getCpf());
+        }
+
         Membro membro = cadastroMapper.toEntity(dto);
         membro.setEndereco(enderecoService.salvar(enderecoMapper.toEntity(dto)));
 
@@ -54,12 +59,17 @@ public class MembroService {
     }
 
     public Membro buscarPeloId(Long id) {
-        return repository.findById(id).orElseThrow(() -> new ObjectNotFoundException(
+        return repository.findById(id).orElseThrow(() -> new ObjectAlreadyExistsException(
                 "Usuáio não econtrado pelo ID:" + id
         ));
     }
 
     public Membro editar(MembroCadastroDTO dto) {
+        Membro cpf = repository.findByCpf(dto.getCpf());
+        if(cpf != null && !cpf.getId().equals(dto.getId())){
+            throw new ObjectNotFoundException("Cpf já cadastrado. Cpf: " + dto.getCpf());
+        }
+
         Membro cadastroMembro = cadastroMapper.toEntity(dto);
         cadastroMembro.setEndereco(enderecoMapper.toEntity(dto));
 
