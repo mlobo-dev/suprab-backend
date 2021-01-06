@@ -16,7 +16,7 @@ services:
   dbmysql:
     image: mysql:5.7
     volumes:
-      - db_data:/var/lib/mysql2
+      - db_data:/var/lib/mysql3
     ports:
       - "3306:3306"
     networks:

@@ -25,7 +25,8 @@ drop table if exists tb_notificacao;
 create table tb_notificacao (
     cod_notificacao bigint not null auto_increment primary key,
     tx_mensagem varchar(255),
-    tx_titulo varchar(255)
+    tx_titulo varchar(255),
+    TX_DATA_NOTIFICACAO varchar(255)
 );
 
 create table tb_endereco (
