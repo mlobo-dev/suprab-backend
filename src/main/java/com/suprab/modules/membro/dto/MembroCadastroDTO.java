@@ -24,7 +24,7 @@ public class MembroCadastroDTO {
     @NotEmpty(message = "Nome não pode ser vazio")
     private String cgp;
 
-    @CPF(message = "Cpf inválido")
+//    @CPF(message = "Cpf inválido")
     private String cpf;
 
     @NotEmpty(message = "Nome não pode ser vazio")
