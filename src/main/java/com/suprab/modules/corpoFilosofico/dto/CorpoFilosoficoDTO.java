@@ -14,7 +14,10 @@ public class CorpoFilosoficoDTO {
     private Long id;
 
     @NotEmpty(message = "Grau não pode ser vazio")
-    @Size(max=13)
+    @Size(
+            max=13,
+            message = "Grau não pode possuir mais que 13 caracteres"
+    )
     private String grau;
 
     @NotEmpty(message = "Corpo não pode ser vazio")

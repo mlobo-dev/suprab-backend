@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -24,13 +25,13 @@ public class CorpoFilosoficoController {
 
     @PostMapping
     @ApiOperation("Salvar um Funcionário")
-    public ResponseEntity<CorpoFilosoficoDTO> salvar(@Validated @RequestBody CorpoFilosoficoDTO dto) {
+    public ResponseEntity<CorpoFilosoficoDTO> salvar(@Valid @RequestBody CorpoFilosoficoDTO dto) {
         return ResponseEntity.ok(mapper.toDto(service.salvar(dto)));
     }
 
     @PutMapping
     @ApiOperation("Edita um  Funcionário.")
-    public ResponseEntity<CorpoFilosoficoDTO> editar(@Validated @RequestBody final CorpoFilosoficoDTO dto) {
+    public ResponseEntity<CorpoFilosoficoDTO> editar(@Valid @RequestBody final CorpoFilosoficoDTO dto) {
         return ResponseEntity.ok(mapper.toDto(service.editar(dto)));
     }
 

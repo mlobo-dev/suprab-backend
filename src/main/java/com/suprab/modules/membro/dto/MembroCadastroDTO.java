@@ -31,7 +31,10 @@ public class MembroCadastroDTO {
     private String nome;
 
     @NotEmpty(message = "Nome não pode ser vazio")
-    @Size(min=2, max=2)
+    @Size(
+            max=2,
+            message = "Tipo sanguineo não pode possuir mais que 2 caracteres"
+    )
     private String tipoSanguineo;
 
     @NotEmpty(message = "Cargo não pode ser vazio")
@@ -50,7 +53,11 @@ public class MembroCadastroDTO {
     private String cidade;
 
     @NotEmpty(message = "UF não pode ser vazio")
-    @Size(max=2)
+    @Size(
+            min=2,
+            max=2,
+            message = "UF deve possuir 2 caracteres"
+    )
     private String uf;
 
     private List<CorpoFilosoficoDTO> corposFilosoficos = new ArrayList<>();
