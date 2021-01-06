@@ -1,7 +1,9 @@
 package com.suprab.modules.notificacao.controller.v1;
 
 
+import com.suprab.modules.notificacao.dto.NotificacaoCadastroDTO;
 import com.suprab.modules.notificacao.dto.NotificacaoDTO;
+import com.suprab.modules.notificacao.mapper.NotificacaoCadastroMapper;
 import com.suprab.modules.notificacao.mapper.NotificacaoMapper;
 import com.suprab.modules.notificacao.service.NotificacaoService;
 import io.swagger.annotations.Api;
@@ -24,13 +26,13 @@ public class NotificacaoController {
 
     @PostMapping
     @ApiOperation("Salvar uma notificação")
-    public ResponseEntity<NotificacaoDTO> salvar(@Validated @RequestBody NotificacaoDTO dto) {
+    public ResponseEntity<NotificacaoDTO> salvar(@Validated @RequestBody NotificacaoCadastroDTO dto) {
         return ResponseEntity.ok(mapper.toDto(service.salvar(dto)));
     }
 
     @PutMapping
     @ApiOperation("Edita uma notificação")
-    public ResponseEntity<NotificacaoDTO> editar(@Validated @RequestBody final NotificacaoDTO dto) {
+    public ResponseEntity<NotificacaoDTO> editar(@Validated @RequestBody final NotificacaoCadastroDTO dto) {
         return ResponseEntity.ok(mapper.toDto(service.editar(dto)));
     }
 

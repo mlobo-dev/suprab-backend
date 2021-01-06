@@ -22,5 +22,8 @@ public class Notificacao {
     @Column(name = "TX_MENSAGEM")
     private String mensagem;
 
+    @Column(name = "TX_DATA_NOTIFICACAO")
+    private String dataNotificacao;
+
 
 }

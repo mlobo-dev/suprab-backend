@@ -5,10 +5,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class NotificacaoDTO {
-
+public class NotificacaoCadastroDTO {
     private Long id;
     private String titulo;
     private String mensagem;
-    private String dataNotificacao;
 }

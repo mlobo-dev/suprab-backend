@@ -54,6 +54,4 @@ public class Membro {
     @ManyToOne
     @JoinColumn(name = "COD_ENDERECO")
     private Endereco endereco;
-
-
 }
