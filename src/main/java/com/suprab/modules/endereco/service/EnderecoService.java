@@ -33,6 +33,10 @@ public class EnderecoService {
         return repository.save(mapper.toEntity(dto));
     }
 
+    public Endereco salvar(final Endereco endereco) {
+        return repository.save(endereco);
+    }
+
     public Endereco buscarPeloId(Long id) {
         return repository.findById(id).orElseThrow(() -> new ObjectNotFoundException(
                 "Endereco não econtrado pelo ID:" + id

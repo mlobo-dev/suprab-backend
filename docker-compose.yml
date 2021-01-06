@@ -1,0 +1,36 @@
+# Use postgres/example user/password credentials
+version: '3.3'
+services:
+  app:
+    container_name: backand
+    image: backand
+    build: ./
+    ports:
+      - "8080:8080"
+    networks:
+      - backand-mysql
+    depends_on:
+      - dbmysql
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://dbmysql:3306/suprab?autoReconnect=true&useSSL=false
+
+  dbmysql:
+    image: mysql:5.7
+    volumes:
+      - db_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    networks:
+      - backand-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: suprab
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+
+volumes:
+  db_data: {}
+
+networks:
+  backand-mysql:

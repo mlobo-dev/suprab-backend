@@ -5,6 +5,7 @@ import com.suprab.exception.ObjectNotFoundException;
 import com.suprab.modules.corpoFilosofico.entity.CorpoFilosofico;
 import com.suprab.modules.corpoFilosofico.mapper.CorpoFilosoficoMapper;
 import com.suprab.modules.corpoFilosofico.service.CorpoFilosoficoService;
+import com.suprab.modules.endereco.mapper.EnderecoCadastroMapper;
 import com.suprab.modules.endereco.service.EnderecoService;
 import com.suprab.modules.membro.dto.MembroCadastroDTO;
 import com.suprab.modules.membro.dto.MembroDTO;
@@ -31,7 +32,7 @@ public class MembroService {
     private final MembroCadastroMapper cadastroMapper;
     private final EnderecoService enderecoService;
     private final CorpoFilosoficoMapper corpoMapper;
-
+    private final EnderecoCadastroMapper enderecoMapper;
 
     @Transactional(readOnly = true)
     public List<Membro> listarTudo() {
@@ -42,9 +43,9 @@ public class MembroService {
     @Transactional
     public Membro salvar(final MembroCadastroDTO dto) {
         Membro membro = cadastroMapper.toEntity(dto);
-        if (dto.getIdEndereco() != null && dto.getIdEndereco() != 0) {
-            membro.setEndereco(enderecoService.buscarPeloId(dto.getIdEndereco()));
-        }
+
+        membro.setEndereco(enderecoService.salvar(enderecoMapper.toEntity(dto)));
+
         if (!dto.getCorposFilosoficos().isEmpty()) {
             List<CorpoFilosofico> corpos = corpoMapper.toEntity(dto.getCorposFilosoficos());
             membro.setCorposFilosoficos(corpoService.salvarTodos(corpos));

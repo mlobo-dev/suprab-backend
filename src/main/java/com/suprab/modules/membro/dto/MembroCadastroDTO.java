@@ -22,7 +22,9 @@ public class MembroCadastroDTO {
     private String cargo;
     private String tituloHonorifico;
     private String dataNascimento;
-    private Long idEndereco;
+    private String cep;
+    private String cidade;
+    private String uf;
     private List<CorpoFilosoficoDTO> corposFilosoficos = new ArrayList<>();
 
 
