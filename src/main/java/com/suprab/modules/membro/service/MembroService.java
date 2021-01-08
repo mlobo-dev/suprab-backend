@@ -87,7 +87,6 @@ public class MembroService {
         endereco.setId(saved.getEndereco().getId());
         endereco.setUf(!isEmptyOrNull(dto.getEndereco().getUf()) ? dto.getEndereco().getUf() : saved.getEndereco().getUf());
         endereco.setCidade(!isEmptyOrNull(dto.getEndereco().getCidade()) ? dto.getEndereco().getCidade() : saved.getEndereco().getCidade());
-        endereco.setCep(!isEmptyOrNull(dto.getEndereco().getCep()) ? dto.getEndereco().getCep() : saved.getEndereco().getCep());
         endereco.setCpf(!isEmptyOrNull(dto.getEndereco().getCpf()) ? dto.getEndereco().getCpf() : saved.getEndereco().getCpf());
 
         dto.setEndereco(enderecoService.editar(endereco));

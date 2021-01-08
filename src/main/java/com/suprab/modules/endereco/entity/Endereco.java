@@ -24,9 +24,4 @@ public class Endereco {
 
     @Column(name = "TX_UF")
     private String uf;
-
-    @Column(name = "TX_CEP")
-    private String cep;
-
-
 }

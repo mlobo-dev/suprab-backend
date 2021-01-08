@@ -55,6 +55,7 @@ public class EnderecoService {
     private Endereco atualizarDados(Endereco saved, Endereco dto) {
         saved.setCidade(!isEmptyOrNull(dto.getCidade()) ? dto.getCidade() : saved.getCidade());
         saved.setCpf(!isEmptyOrNull(dto.getCpf()) ? dto.getCpf() : saved.getCpf());
+        saved.setUf(!isEmptyOrNull(dto.getUf()) ? dto.getUf() : saved.getUf());
         return saved;
     }
 

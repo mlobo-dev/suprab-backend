@@ -32,9 +32,6 @@ public class Membro {
     @Column(name = "TX_NOME")
     private String nome;
 
-    @Column(name = "TX_TIPO_SANGUINEO")
-    private String tipoSanguineo;
-
     @Column(name = "TX_CARGO")
     private String cargo;
 

@@ -18,7 +18,6 @@ public class MembroDTO {
     private String cgp;
     private String cpf;
     private String nome;
-    private String tipoSanguineo;
     private String cargo;
     private String tituloHonorifico;
     private String dataNascimento;

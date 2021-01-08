@@ -9,7 +9,6 @@ public class EnderecoDTO {
 
     private Long id;
     private String cpf;
-    private String cep;
     private String cidade;
     private String uf;
 

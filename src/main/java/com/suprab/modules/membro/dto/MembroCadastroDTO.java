@@ -4,7 +4,6 @@ import com.suprab.modules.corpoFilosofico.dto.CorpoFilosoficoDTO;
 import com.suprab.modules.membro.StatusEnum;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.validator.constraints.br.CPF;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -24,18 +23,10 @@ public class MembroCadastroDTO {
     @NotEmpty(message = "Nome não pode ser vazio")
     private String cgp;
 
-//    @CPF(message = "Cpf inválido")
     private String cpf;
 
     @NotEmpty(message = "Nome não pode ser vazio")
     private String nome;
-
-    @NotEmpty(message = "Nome não pode ser vazio")
-    @Size(
-            max=2,
-            message = "Tipo sanguineo não pode possuir mais que 2 caracteres"
-    )
-    private String tipoSanguineo;
 
     @NotEmpty(message = "Cargo não pode ser vazio")
     private String cargo;
@@ -45,9 +36,6 @@ public class MembroCadastroDTO {
 
     @NotEmpty(message = "Data de nascimento não pode ser vazio")
     private String dataNascimento;
-
-    @NotEmpty(message = "Cep não pode ser vazio")
-    private String cep;
 
     @NotEmpty(message = "Cidade não pode ser vazio")
     private String cidade;
